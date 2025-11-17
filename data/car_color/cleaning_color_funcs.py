@@ -2,13 +2,10 @@ def fix_half_space(text):
     if text is None:
         return text
     text = str(text)
-
     text = text.replace("\u200c", " ")
-
     text = text.replace("\u200b", " ")
-
     text = text.replace("\u00A0", " ")
-
+    
     import re
     text = re.sub(r"\s+", " ", text).strip()
     return text
