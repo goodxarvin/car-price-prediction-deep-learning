@@ -5,5 +5,5 @@ df = df[df["price"] != 39700000000]
 df = df[df["price"] != 11111111]
 df["price"] = df["price"].apply(lambda x : x/35000000000)
 
-df.to_csv("data/csv_outputs/cleaned_color_mileage_model_price_data.csv", float_format="%.15f", index=True)
+df.to_csv("data/csv_outputs/cleaned_color_mileage_model_price_data.csv", float_format="%.15f", index=False)
 
