@@ -20,17 +20,24 @@ colors = [
     'زرد', 'نارنجی', 'قهوه‌ای', 'طلایی', 'موکا', 'یخی', 'نوک‌مدادی', 'دلفینی',
     'white', 'black', 'gray', 'grey', 'blue', 'red', 'green', 'silver', 'gold', 'orange', 'brown'
 ]
-years = [str(y) for y in range(1370, 1405)] + [str(y)
-                                               for y in range(1990, 2026)] + [str(y)
-                                                                              for y in range(50, 100)] + [str(y) for y in range(400, 404)]
+years = [y for y in range(1370, 1406)] + [y for y in range(1990, 2026)] + \
+    [y for y in range(50, 100)] + [y for y in range(400, 404)]
 unuseful_words = adjectives + docs_words + colors + years
 
 
 def filter_unuseful_words(name):
     token = word_tokenize(name)
-
     for word in token.copy():
-        if word in unuseful_words:
-            token.remove(word)
+        try:
+            int_word = int(word)
+            if int_word in unuseful_words:
+                token.remove(word)
+
+        except:
+            if word in unuseful_words:
+                token.remove(word)
 
     return " ".join(token)
+
+
+# print(filter_unuseful_words("سمند سورن پلاس، مدل ۱۴۰۳"))
