@@ -42,12 +42,12 @@ print(f"test size: {X_test.shape[0]}")
 
 tabnet_params = {
     "n_d": 24,
-    "n_a": 21,
+    "n_a": 18,
     "n_steps": 8,
     "gamma": 1.5,
     "cat_idxs": cat_idxs,
     "cat_dims": cat_dims,
-    "cat_emb_dim": [4, 8],
+    "cat_emb_dim": [4, 12],
     "optimizer_fn": __import__("torch").optim.Adam,
     "optimizer_params": {"lr": 2e-2}
 }
