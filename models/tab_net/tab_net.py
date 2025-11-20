@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from pytorch_tabnet.tab_model import TabNetRegressor
+from sklearn.model_selection import train_test_split
+
 
 df = pd.read_csv(
     "data/csv_outputs/cleaned_mileage_model_price_name_color_data.csv.csv")
@@ -17,13 +19,26 @@ y = df["price"].values.astype(np.float32).reshape(-1, 1)
 cat_idxs = [selected_cols.index(col) for col in cat_cols]
 cat_dims = [df[col].nunique() for col in cat_cols]
 
-print(cat_cols, cat_dims)
+
+
+
+X_temp, X_test, y_temp, y_test = train_test_split(
+    X, y, test_size=0.15, random_state=42)
+
+
+X_train, X_val, y_train, y_val = train_test_split(
+    X_temp, y_temp, test_size=0.2, random_state=42)
+
+# print(cat_cols, cat_dims)
+print(f"train size: {X_train.shape[0]}")
+print(f"validation size: {X_val.shape[0]}")
+print(f"test size: {X_test.shape[0]}")
 
 
 tabnet_params = {
     "n_d": 8,
     "n_a": 8,
-    "n_steps": 5, 
+    "n_steps": 10,
     "gamma": 1.5,
     "cat_idxs": cat_idxs,
     "cat_dims": cat_dims,
@@ -35,13 +50,17 @@ tabnet_params = {
 model = TabNetRegressor(**tabnet_params)
 
 model.fit(
-    X, y,
-    max_epochs=100,
+    X_train, y_train,
+    eval_set=[(X_val, y_val)],
+    max_epochs=15,
     batch_size=256,
     virtual_batch_size=128,
     patience=20,
     drop_last=False
 )
 
-preds = model.predict(X)
-print(preds[:10])
+preds = model.predict(X_test)
+
+
+for real, pred in zip(y_test[:10], preds[:10]):
+    print(f"Actual: {real[0]}, Predicted: {pred}")
