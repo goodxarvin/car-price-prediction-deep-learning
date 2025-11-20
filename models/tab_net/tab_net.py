@@ -38,7 +38,7 @@ print(f"test size: {X_test.shape[0]}")
 
 
 tabnet_params = {
-    "n_d": 8,
+    "n_d": 16,
     "n_a": 24,
     "n_steps": 8,
     "gamma": 1.5,
@@ -54,7 +54,7 @@ model = TabNetRegressor(**tabnet_params)
 model.fit(
     X_train, y_train,
     eval_set=[(X_val, y_val)],
-    max_epochs=30,
+    max_epochs=100,
     batch_size=256,
     virtual_batch_size=128,
     patience=15,
