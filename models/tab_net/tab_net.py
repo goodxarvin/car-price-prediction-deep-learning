@@ -12,7 +12,7 @@ print(torch.cuda.get_device_name())
 df = pd.read_csv(
     "data/csv_outputs/cleaned_mileage_model_price_name_color_data.csv.csv")
 
-df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+df = df.sample(n=len(df)).reset_index(drop=True)
 
 
 num_cols = ["mileage", "model"]
@@ -41,7 +41,7 @@ print(f"test size: {X_test.shape[0]}")
 
 tabnet_params = {
     "n_d": 24,
-    "n_a": 12,
+    "n_a": 16,
     "n_steps": 8,
     "gamma": 1.5,
     "cat_idxs": cat_idxs,
