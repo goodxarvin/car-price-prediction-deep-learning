@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from pytorch_tabnet.tab_model import TabNetRegressor
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 import torch
 
 
@@ -41,7 +42,7 @@ print(f"test size: {X_test.shape[0]}")
 
 tabnet_params = {
     "n_d": 24,
-    "n_a": 16,
+    "n_a": 20,
     "n_steps": 8,
     "gamma": 1.5,
     "cat_idxs": cat_idxs,
@@ -64,6 +65,12 @@ model.fit(
 )
 
 preds = model.predict(X_test)
+
+mse = mean_squared_error(y_test, preds)
+mae = mean_absolute_error(y_test, preds)
+
+print("MSE:", mse)
+print("MAE:", mae)
 
 
 for real, pred in zip(y_test[:10], preds[:10]):
