@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
+import torch
 from pytorch_tabnet.tab_model import TabNetRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-import torch
 
 
 print(torch.cuda.is_available())
@@ -13,7 +13,7 @@ print(torch.cuda.get_device_name())
 df = pd.read_csv(
     "data/csv_outputs/cleaned_mileage_model_price_name_color_data.csv.csv")
 
-df = df.sample(n=len(df)).reset_index(drop=True)
+df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 
 
 num_cols = ["mileage", "model"]
@@ -42,7 +42,7 @@ print(f"test size: {X_test.shape[0]}")
 
 tabnet_params = {
     "n_d": 24,
-    "n_a": 20,
+    "n_a": 21,
     "n_steps": 8,
     "gamma": 1.5,
     "cat_idxs": cat_idxs,
@@ -57,7 +57,7 @@ model = TabNetRegressor(**tabnet_params)
 model.fit(
     X_train, y_train,
     eval_set=[(X_val, y_val)],
-    max_epochs=100,
+    max_epochs=1,
     batch_size=128,
     virtual_batch_size=64,
     patience=15,
@@ -69,10 +69,10 @@ preds = model.predict(X_test)
 mse = mean_squared_error(y_test, preds)
 mae = mean_absolute_error(y_test, preds)
 
-print("MSE:", mse)
-print("MAE:", mae)
+print("MSE:", round(float(mse), 6))
+print("MAE:", round(float(mae), 6))
 
 
 for real, pred in zip(y_test[:10], preds[:10]):
     print("Actual:    {:.1f}\nPredicted: {:.1f}\n".format(
-        float(real[0])*35000000000, abs(float(pred)*35000000000)))
+        float(real[0].item())*35000000000, abs(float(pred)*35000000000)))
