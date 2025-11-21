@@ -41,7 +41,7 @@ print(f"test size: {X_test.shape[0]}")
 
 
 tabnet_params = {
-    "n_d": 22,
+    "n_d": 20,
     "n_a": 16,
     "n_steps": 8,
     "gamma": 0.7,
