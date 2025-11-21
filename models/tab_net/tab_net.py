@@ -41,7 +41,7 @@ print(f"test size: {X_test.shape[0]}")
 
 
 tabnet_params = {
-    "n_d": 20,
+    "n_d": 22,
     "n_a": 16,
     "n_steps": 8,
     "gamma": 0.7,
@@ -70,7 +70,7 @@ mse = mean_squared_error(y_test, preds)
 mae = mean_absolute_error(y_test, preds)
 
 print("MSE:", round(float(mse), 6))
-print("MAE:", round(float(mae), 6))
+print("MAE:", round(float(mae), 6), round(float(mae), 6)*35000000000)
 
 
 for real, pred in zip(y_test[:10], preds[:10]):
