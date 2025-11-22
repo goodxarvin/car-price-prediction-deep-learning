@@ -61,11 +61,7 @@ tabnet_params = {
     "cat_dims": cat_dims,
     "cat_emb_dim": [4, 12],
     "optimizer_fn": __import__("torch").optim.Adam,
-<<<<<<< HEAD
-    "optimizer_params": {"lr": 2e-2},
-=======
     "optimizer_params": {"lr": 2e-2}
->>>>>>> dbf2b767c64db9bcfa92cb6439c677028afbc7b0
 }
 
 fold_mse = []
@@ -80,10 +76,7 @@ for fold, (train_idx, val_idx) in enumerate(kf.split(X_train_full)):
     model.fit(
         X_train, y_train,
         eval_set=[(X_val, y_val)],
-<<<<<<< HEAD
         loss_fn=nn.SmoothL1Loss(),
-=======
->>>>>>> dbf2b767c64db9bcfa92cb6439c677028afbc7b0
         max_epochs=100,
         batch_size=128,
         virtual_batch_size=64,

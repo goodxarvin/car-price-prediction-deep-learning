@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import torch
+from torch import nn
 from pytorch_tabnet.tab_model import TabNetRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error
@@ -35,6 +36,8 @@ X_train, X_val, y_train, y_val = train_test_split(
     X_temp, y_temp, test_size=0.15, random_state=42)
 
 # print(cat_cols, cat_dims)
+
+print(f"cluster names: {df['name_cluster'].nunique()}")
 print(f"train size: {X_train.shape[0]}")
 print(f"validation size: {X_val.shape[0]}")
 print(f"test size: {X_test.shape[0]}")
@@ -47,7 +50,7 @@ tabnet_params = {
     "gamma": 0.7,
     "cat_idxs": cat_idxs,
     "cat_dims": cat_dims,
-    "cat_emb_dim": [4, 12],
+    "cat_emb_dim": [4, 32],
     "optimizer_fn": __import__("torch").optim.Adam,
     "optimizer_params": {"lr": 2e-2}
 }
@@ -58,6 +61,7 @@ model.fit(
     X_train, y_train,
     eval_set=[(X_val, y_val)],
     max_epochs=100,
+    loss_fn=nn.SmoothL1Loss(),
     batch_size=128,
     virtual_batch_size=64,
     patience=15,

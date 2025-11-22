@@ -1,0 +1,36 @@
+[33ma5b9187[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m updated requirements.txt
+[33m5e5c64a[m trying k=500 for kmeans
+[33m6537fda[m  finding the best number of clusters
+[33m8f09679[m optimizing clusters for k means
+[33mab07454[m optimizing clusters for k means
+[33mf4408df[m added k fold cross validation
+[33mdbf2b76[m added k fold cross validation
+[33m5dbbaf4[m best configuration until now
+[33m6dcadcc[m gamma=0.7, n_d=20, n_a=16, name_enbed_dim=12, n_steps=8, batch_size=128, v_batch_size=64
+[33mfb8f495[m gamma=0.7, n_d=22, n_a=16, name_enbed_dim=12, n_steps=8, batch_size=128, v_batch_size=64
+[33m8122d60[m gamma=0.7, n_d=24, n_a=18, name_enbed_dim=12, n_steps=8, batch_size=128, v_batch_size=64
+[33ma578d97[m gamma=0.9, n_d=24, n_a=18, name_enbed_dim=12, n_steps=8, batch_size=128, v_batch_size=64
+[33m1f1c514[m gamma=1.2, n_d=24, n_a=18, name_enbed_dim=12, n_steps=8, batch_size=128, v_batch_size=64
+[33ma72579b[m n_d=24, n_a=18, name_enbed_dim=12, n_steps=8, batch_size=128, v_batch_size=64
+[33m2c17cfe[m fixed csv file
+[33mea19f19[m n_d=24, n_a=21, n_steps=8, batch_size=128, v_batch_size=64
+[33m51cf5a0[m n_d=24, n_a=18, n_steps=8, batch_size=128, v_batch_size=64
+[33mb681598[m n_d=24, n_a=16, n_steps=8, batch_size=128, v_batch_size=64
+[33m820d9ad[m n_d=24, n_a=12, n_steps=8, batch_size=128, v_batch_size=64
+[33mc5cc28a[m n_d=12, n_a=12, n_steps=8
+[33m62d7d9b[m n_d=16, n_a=16, n_steps=8
+[33ma886937[m n_d=16, n_a=24, n_steps=8
+[33m946875d[m n_d=8, n_a=24, n_steps=8
+[33m9db0b22[m splited train , validation and test data
+[33m02d42ab[m tabnet architecture created
+[33m1cc35e8[m working on tanbet model
+[33m0d162c7[m preproccessed data for embedding
+[33mc704137[m cleaning data almost completed
+[33m3d275ee[m completed the kmeans process for clustering the name field
+[33mba2dfe6[m fixed the nan data files and working on kmeans
+[33m0d9139d[m cleaning price data completed
+[33m38e342f[m cleaning model data completed
+[33mef73af6[m cleaning mileage data completed
+[33ma1fd84b[m cleaning color data completed
+[33me0fb0d2[m initialized the project and installed most of the dependencies
+[33ma7a899f[m Initial commit
