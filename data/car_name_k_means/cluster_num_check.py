@@ -5,22 +5,20 @@ from sklearn.metrics import silhouette_samples
 
 df = pd.read_csv("data/csv_outputs/cleaned_mileage_model_price_name_color_data.csv")
 
-# فرض: labels حاصل از KMeans و emb_reduced یا X موجوده
-labels = kmeans.labels_   # یا labels_final
-df['name_cluster'] = labels
+cluster_sizes = df['name_cluster'].value_counts().sort_values(ascending=False)
 
-# اندازه هر خوشه
-cluster_sizes = df['cluster'].value_counts().sort_values(ascending=False)
-print(cluster_sizes.head(30))
+print(cluster_sizes)
 
-# silhouette به ازای هر نمونه
-sil_vals = silhouette_samples(emb_reduced, labels, metric='euclidean')
-df['silhouette'] = sil_vals
+total_clusters = len(cluster_sizes)
+small_under_10 = (cluster_sizes < 10).sum()
+small_under_20 = (cluster_sizes < 20).sum()
 
-# میانگین silhouette هر خوشه
-sil_by_cluster = df.groupby('cluster')['silhouette'].mean().sort_values(ascending=False)
-print(sil_by_cluster.head(30))
+print("Total clusters =", total_clusters)
+print("Clusters with < 10 samples =", small_under_10)
+print("Clusters with < 20 samples =", small_under_20)
 
-# درصد خوشه‌های خیلی ریز
-small_clusters = cluster_sizes[cluster_sizes < 10].count()
-print("Small clusters (<10):", small_clusters, " / ", len(cluster_sizes))
+print("\nPercentage <10 samples = {:.2f}%".format(100 * small_under_10 / total_clusters))
+print("Percentage <20 samples = {:.2f}%".format(100 * small_under_20 / total_clusters))
+
+print("\nTop 10 biggest clusters:\n", cluster_sizes.head(10))
+print("\nBottom 10 smallest clusters:\n", cluster_sizes.tail(10))

@@ -14,7 +14,7 @@ X = vectorizer.fit_transform(names)
 
 
 sse = []
-K_range = range(400, 401)
+K_range = range(500, 501)
 
 for k in K_range:
     km = KMeans(n_clusters=k, random_state=42)
