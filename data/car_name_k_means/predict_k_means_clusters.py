@@ -20,11 +20,11 @@ for k in K_range:
     km.fit(X)
     sse.append(km.inertia_)
 
-# plt.plot(K_range, sse, marker='o')
-# plt.xlabel("k")
-# plt.ylabel("SSE")
-# plt.title("Elbow Method")
-# plt.show()
+plt.plot(K_range, sse, marker='o')
+plt.xlabel("k")
+plt.ylabel("SSE")
+plt.title("Elbow Method")
+plt.show()
 
 
 sil_scores = []
