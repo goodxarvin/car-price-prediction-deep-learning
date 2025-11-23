@@ -13,7 +13,7 @@ df["name"] = df["name"].apply(filter_unuseful_words)
 vectorizer = TfidfVectorizer()
 X = vectorizer.fit_transform(df["name"])
 
-kmeans = KMeans(n_clusters=700, random_state=42)
+kmeans = KMeans(n_clusters=600, random_state=42)
 df["name_cluster"] = kmeans.fit_predict(X)
 
 
