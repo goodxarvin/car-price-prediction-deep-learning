@@ -18,7 +18,9 @@ df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 
 
 num_cols = ["mileage", "model"]
+# cat_cols = ["model_id", "color_id", "name_cluster"]
 cat_cols = ["color_id", "name_cluster"]
+
 selected_cols = cat_cols + num_cols
 
 X = df[selected_cols].values.astype(np.float32)
@@ -50,9 +52,10 @@ tabnet_params = {
     "gamma": 0.7,
     "cat_idxs": cat_idxs,
     "cat_dims": cat_dims,
-    "cat_emb_dim": [4, 32],
+    "cat_emb_dim": [4, 24],
     "optimizer_fn": __import__("torch").optim.Adam,
-    "optimizer_params": {"lr": 2e-2}
+    "optimizer_params": {"lr": 2e-2},
+    "mask_type": "entmax"
 }
 
 model = TabNetRegressor(**tabnet_params)
