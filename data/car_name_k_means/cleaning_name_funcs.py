@@ -9,13 +9,14 @@ adjectives = ['آماده‌',
               'در', 'حد', 'صفر', 'درحدصفر', 'درحد', 'بینقص', 'سفارشی', 'دوگانه', 'تک گانه', 'دورنگ', 'بیمه دار',
               'آماده تحویل', 'تمیز و مرتب', 'فنی سالم', 'خوش رکاب', 'بدون', 'رنگ', 'بدون خط و خش', 'آماده', 'سفر', 'تک‌', 'برگ', 'مدل', 'دوگانه سوز', 'سوز', '،', 'حواله', 'بی',
               'خرج', 'سیلندر', 'توربو', 'شارژ', 'خانگی', 'تازه', 'شده', 'کامل', 'موتور', 'جدید', 'استثنایی', 'ارتقا', 'یافته', 'فلز', 'اپشنال', 'آپشنال', 'شرط', 'به', 'اسفند', 'سفارشی',
-              'تعمیر', 'انژکتور', 'صفر', 'خشک', 'واقعی', 'فروش', 'معاوضه', 'و', 'خونگی', 'بیرنگ', 'کولر', 'شرکتی', 'جدید', 'بورسی', 'طلا'
+              'تعمیر', 'انژکتور', 'صفر', 'خشک', 'واقعی', 'فروش', 'معاوضه', 'و', 'خونگی', 'بیرنگ', 'کولر', 'شرکتی', 'جدید', 'بورسی', 'طلا', 'جدید', 'سندآزاد', 'سند', 'آزاد', 'ازاد'
               ]
 docs_words = [
     'تک برگ', 'سند تک برگ', 'سند', 'کارکرد', 'بیمه', 'برگه', 'کارشناسی', 'برگه', 'قولنامه', 'مالک',
     'مدارک کامل', 'برگه کمپانی', 'تخفیف بیمه', 'سال تخفیف', 'بدون خلافی', 'پلاک ملی', 'بنزینی',
     'دوگانه سوز', 'دوگانه‌سوز', 'دوگانه', 'حواله', 'مدرک', 'مدارک', 'جزییات', 'اسقاطی', 'کاربراتور', 'کاربرات',
-    'آبشنال', 'کیلومتر', '(', ')', 'زیمنس', 'هرمزگان ', 'بندرلنگه', 'گاز', 'گولر', 'بیمه', ',', 'Lx,بیمه'
+    'آبشنال', 'کیلومتر', '(', ')', 'زیمنس', 'هرمزگان ', 'بندرلنگه', 'گاز', 'گولر', 'بیمه', ',', 'Lx,بیمه', '**', '*',
+    'اقساط', 'اقساطی', 'نقد', 'و', 'آپشن', 'وترمز', 'ترمز', 'گانه', 'رینگ'
 ]
 colors = [
     'سفید', 'مشکی', 'طوسی', 'نقره‌ای', 'خاکستری', 'آبی', 'قرمز', 'زرشکی', 'سبز', 'بژ',
@@ -48,7 +49,33 @@ def filter_unuseful_words(name):
             if word in unuseful_words:
                 token.remove(word)
 
-    return " ".join(token)
+    delete_star = " ".join(token).replace("*", "")
+    delete_p_s = delete_star.replace("(", "")
+    delete_p_e = delete_p_s.replace(")", "")
+    delete_mines = delete_p_e.replace("-", "")
+    delete_ = delete_mines.replace('_', '')
+    delete_slash = delete_.replace("/", "")
+    delete_b_slash = delete_slash.replace("\\", "")
+    delete_in = delete_b_slash.replace("»", "")
+    delete_out = delete_in.replace("«", "")
+    delete_percent = delete_out.replace("٪", "")
+    delete_en_percent = delete_percent.replace("%", "")
+    delete_in_start = delete_en_percent.replace("<", "")
+    delete_out_end = delete_in_start.replace(">", "")
+    delete_semi_colon = delete_out_end.replace(";", "")
+    delete_colon = delete_semi_colon.replace(":", "")
+    delete_nbsp = delete_colon.replace("&nbsp", "")
+    delete_nbsp_more = delete_nbsp.replace("&nbsp;&nbsp;", "")
+    delete_plus = delete_nbsp_more.replace("+", "")
+    delete_dot = delete_plus.replace(".", "")
+    final_filtered_name = delete_dot.strip().lower()
+
+    return final_filtered_name
 
 
-# print(filter_unuseful_words('دنا پلاس تیپ ۲ دنده‌ای'))
+# print(filter_unuseful_words('**تیگو 7 پرو پرمیوم صفر*'))
+# print(filter_unuseful_words('٪٪ریسپکت 2 پرایم صفرخشک '))
+# print(filter_unuseful_words('%%تارا V 4 ال ایکس تیتانیوم'))
+# print(filter_unuseful_words('&nbsp; هیوندای اکسنت'))
+# print(filter_unuseful_words('تیگو 8 پروe+ . پلاگین هیبرید .'))
+# print(filter_unuseful_words('کوییک GXR رینگ آلمینیومی گانه ترمزESC+آپشن'))
