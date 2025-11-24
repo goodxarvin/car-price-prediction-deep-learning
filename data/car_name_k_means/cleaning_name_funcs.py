@@ -16,7 +16,12 @@ docs_words = [
     'مدارک کامل', 'برگه کمپانی', 'تخفیف بیمه', 'سال تخفیف', 'بدون خلافی', 'پلاک ملی', 'بنزینی',
     'دوگانه سوز', 'دوگانه‌سوز', 'دوگانه', 'حواله', 'مدرک', 'مدارک', 'جزییات', 'اسقاطی', 'کاربراتور', 'کاربرات',
     'آبشنال', 'کیلومتر', '(', ')', 'زیمنس', 'هرمزگان ', 'بندرلنگه', 'گاز', 'گولر', 'بیمه', ',', 'Lx,بیمه', '**', '*',
-    'اقساط', 'اقساطی', 'نقد', 'و', 'آپشن', 'وترمز', 'ترمز', 'گانه', 'رینگ'
+    'اقساط', 'اقساطی', 'نقد', 'و', 'آپشن', 'وترمز', 'ترمز', 'گانه', 'رینگ', 'کارخانه', 'خودرو', 'سوز', 'تومن', 'تومان', 'هزار', 'عالی',
+    'رین', 'فوری', 'عروسک', 'سال', 'تحویل', 'کم', 'نمایندگی', 'با', 'مانیتور', 'پایین', 'قالپاق', 'گازوئیل', 'کارمندی', 'کارمند',
+    'گازسوزکارخانه', 'قابل', 'وقابل', 'فروشی', 'صفرخشک', 'پایدار', 'پایداری', 'ثالث', 'شخص', 'بدنه', 'دارد', 'تمام', 'بدون‌رنگ', 'فنی',
+    'پر', 'کلاغی', 'پرکلاغی', 'تک', 'لاکاغذی', 'سواری', 'مونتاژ', 'وارداتی', 'واردات', 'یخچال', 'کاپوت', 'فقط', 'شرایط', 'تا', 'درصدنقدمابقی',
+    'ماه', 'پارسال', 'فوق', 'سلامت', 'اخر', 'آخر', 'اراک', 'ساده', 'سالم', 'دارم', 'روز', 'ارتقاء', 'سود', 'شما', 'برج', 'برای', 'بسیار',
+    'یی'
 ]
 colors = [
     'سفید', 'مشکی', 'طوسی', 'نقره‌ای', 'خاکستری', 'آبی', 'قرمز', 'زرشکی', 'سبز', 'بژ',
@@ -68,14 +73,28 @@ def filter_unuseful_words(name):
     delete_nbsp_more = delete_nbsp.replace("&nbsp;&nbsp;", "")
     delete_plus = delete_nbsp_more.replace("+", "")
     delete_dot = delete_plus.replace(".", "")
-    final_filtered_name = delete_dot.strip().lower()
+    rep_h = delete_dot.replace("اچ", "h")
+    delete_silver = rep_h.replace("نقره ای", "")
+    delete_es = delete_silver.replace("اص", "")
+    delete_white = delete_es.replace("سفید", "")
+    delete_car = delete_white.replace('خودرو', '')
+    final_filtered_name = delete_car.strip().lower()
 
     return final_filtered_name
 
 
-# print(filter_unuseful_words('**تیگو 7 پرو پرمیوم صفر*'))
-# print(filter_unuseful_words('٪٪ریسپکت 2 پرایم صفرخشک '))
-# print(filter_unuseful_words('%%تارا V 4 ال ایکس تیتانیوم'))
-# print(filter_unuseful_words('&nbsp; هیوندای اکسنت'))
-# print(filter_unuseful_words('تیگو 8 پروe+ . پلاگین هیبرید .'))
-# print(filter_unuseful_words('کوییک GXR رینگ آلمینیومی گانه ترمزESC+آپشن'))
+# print(filter_unuseful_words('کوییک دنده‌ای r فروشی وقابل'))
+# print(filter_unuseful_words('برلیانس اچ 230 دنده'))
+# print(filter_unuseful_words('سمندlx ef 7 گازسوزکارخانه کارمندی'))
+# print(filter_unuseful_words(' سمند ef 7 سورن پلاس با مانیتور'))
+# print(filter_unuseful_words('پژو پارس عالی هزار تومن'))
+# print(filter_unuseful_words('206 تیپ ۲'))
+# print(filter_unuseful_words('خودرو فیدلیتی 7 نفره فوری'))
+# print(filter_unuseful_words('  پژو پارس سال عروسک'))
+# print(filter_unuseful_words('رانا پلاس تحویل کم'))
+# print(filter_unuseful_words(' پژو ۴۰۵ لاکاغذی'))
+# print(filter_unuseful_words(' پژو ۴۰۵ پرکلاغی'))
+# print(filter_unuseful_words(' سوزوکی گراند ویتارا مونتاژ'))
+# print(filter_unuseful_words('پژو 206 تیپ 2 فقط 1 کاپوت یخچال'))
+# print(filter_unuseful_words('اس دی v 8 ۳۰ درصدنقدمابقی شرایط تا 4 ماه'))
+# print(filter_unuseful_words('کوییک دنده‌ای rسفید'))
