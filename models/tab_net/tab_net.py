@@ -52,7 +52,7 @@ tabnet_params = {
     "gamma": 0.7,
     "cat_idxs": cat_idxs,
     "cat_dims": cat_dims,
-    "cat_emb_dim": [4, 32],
+    "cat_emb_dim": [4, 46],
     "optimizer_fn": __import__("torch").optim.Adam,
     "optimizer_params": {"lr": 2e-2},
 }
