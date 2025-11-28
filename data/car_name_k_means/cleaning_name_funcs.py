@@ -107,7 +107,6 @@ def filter_unuseful_words(name):
     delete_installments = delete_company.replace("نقدواقساط", "")
     delete_discount = delete_installments.replace("تخفیف پای معامله", "")
     delete_noise = delete_discount.replace("صدا  سیستم برقی فعال", "")
-    delete_other = delete_noise.replace("سایر تیپ‌های", "")
     delete_noice_2 = delete_noise.replace("توربوشارژاتومات اردیبهشت", "")
 
     final_filtered_name = delete_noice_2.strip().lower()
