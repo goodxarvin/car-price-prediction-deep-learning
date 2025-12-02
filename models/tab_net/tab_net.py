@@ -92,9 +92,9 @@ for car_cluster_dim in car_cluster_dims:
 
 
 with open("models/tab_net/results.txt", "a", encoding="utf-8") as file:
-    file.write(f"k={df['name_cluster'].nunique()}")
+    file.write(f"k={df['name_cluster'].nunique()}\n")
     file.write(
-        f"best mse at {min(mse_results.keys())} at car embed {mse_results[min(mse_results.keys())]}")
+        f"best mse at {min(mse_results.keys())} at car embed {mse_results[min(mse_results.keys())]}\n")
     file.write(
         f"best mae at {min(mae_results.keys())} at car embed {mae_results[min(mae_results.keys())]}\n")
 
