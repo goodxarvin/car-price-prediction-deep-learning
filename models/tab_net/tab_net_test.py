@@ -50,42 +50,45 @@ mse_results = {}
 mae_results = {}
 
 
+for car_cluster_dim in car_cluster_dims:
+    print(f"\ntrying {car_cluster_dim} clusters")
 
-tabnet_params = {
-    "n_d": 32,
-    "n_a": 32,
-    "n_steps": 8,
-    "gamma": 0.7,
-    "cat_idxs": cat_idxs,
-    "cat_dims": cat_dims,
-    "cat_emb_dim": [4, 59],
-    "optimizer_fn": __import__("torch").optim.Adam,
-    "optimizer_params": {"lr": 2e-2},
-}
+    tabnet_params = {
+        "n_d": 32,
+        "n_a": 32,
+        "n_steps": 8,
+        "gamma": 0.7,
+        "cat_idxs": cat_idxs,
+        "cat_dims": cat_dims,
+        "cat_emb_dim": [4, car_cluster_dim],
+        "optimizer_fn": __import__("torch").optim.Adam,
+        "optimizer_params": {"lr": 2e-2},
+    }
 
-model = TabNetRegressor(**tabnet_params)
+    model = TabNetRegressor(**tabnet_params)
 
-model.fit(
-    X_train, y_train,
-    eval_set=[(X_val, y_val)],
-    max_epochs=100,
-    loss_fn=nn.SmoothL1Loss(),
-    batch_size=128,
-    virtual_batch_size=64,
-    patience=15,
-    drop_last=False
-)
+    model.fit(
+        X_train, y_train,
+        eval_set=[(X_val, y_val)],
+        max_epochs=100,
+        loss_fn=nn.SmoothL1Loss(),
+        batch_size=128,
+        virtual_batch_size=64,
+        patience=15,
+        drop_last=False
+    )
 
-preds = model.predict(X_test)
+    preds = model.predict(X_test)
 
-mse = mean_squared_error(y_test, preds)
-mae = mean_absolute_error(y_test, preds)
-norm_mae = round(float(mae), 6)*35000000000
+    mse = mean_squared_error(y_test, preds)
+    mae = mean_absolute_error(y_test, preds)
+    norm_mae = round(float(mae), 6)*35000000000
 
-print("MSE:", round(float(mse), 6))
-print("MAE:", round(float(mae), 6))
+    print("MSE:", round(float(mse), 6))
+    print("MAE:", round(float(mae), 6))
 
-
+    mse_results[mse] = car_cluster_dim
+    mae_results[norm_mae] = car_cluster_dim
 
 
 with open("models/tab_net/results.txt", "a", encoding="utf-8") as file:
