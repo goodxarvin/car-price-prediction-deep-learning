@@ -1,3 +1,4 @@
+import joblib
 import numpy as np
 import pandas as pd
 import torch
@@ -54,15 +55,15 @@ for car_cluster_dim in car_cluster_dims:
     print(f"\ntrying {car_cluster_dim} clusters")
 
     tabnet_params = {
-        "n_d": 32,
-        "n_a": 32,
+        "n_d": 12,
+        "n_a": 12,
         "n_steps": 8,
         "gamma": 0.7,
         "cat_idxs": cat_idxs,
         "cat_dims": cat_dims,
         "cat_emb_dim": [4, car_cluster_dim],
         "optimizer_fn": __import__("torch").optim.Adam,
-        "optimizer_params": {"lr": 2e-2},
+        "optimizer_params": {"lr": 0.003},
     }
 
     model = TabNetRegressor(**tabnet_params)
@@ -72,8 +73,8 @@ for car_cluster_dim in car_cluster_dims:
         eval_set=[(X_val, y_val)],
         max_epochs=100,
         loss_fn=nn.SmoothL1Loss(),
-        batch_size=128,
-        virtual_batch_size=64,
+        batch_size=64,
+        virtual_batch_size=32,
         patience=15,
         drop_last=False
     )

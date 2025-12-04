@@ -24,7 +24,7 @@ cat_cols = ["color_id", "name_cluster"]
 selected_cols = cat_cols + num_cols
 
 X = df[selected_cols].values.astype(np.float32)
-y = df["price"].values.astype(np.float32).reshape(-1, 1)
+y = df["price_scaled"].values.astype(np.float32).reshape(-1, 1)
 
 cat_idxs = [selected_cols.index(col) for col in cat_cols]
 cat_dims = [df[col].nunique() for col in cat_cols]
@@ -50,15 +50,14 @@ mse_results = {}
 mae_results = {}
 
 
-
 tabnet_params = {
-    "n_d": 32,
-    "n_a": 32,
+    "n_d": 12,
+    "n_a": 12,
     "n_steps": 8,
     "gamma": 0.7,
     "cat_idxs": cat_idxs,
     "cat_dims": cat_dims,
-    "cat_emb_dim": [4, 59],
+    "cat_emb_dim": [4, 16],
     "optimizer_fn": __import__("torch").optim.Adam,
     "optimizer_params": {"lr": 2e-2},
 }
@@ -70,22 +69,23 @@ model.fit(
     eval_set=[(X_val, y_val)],
     max_epochs=100,
     loss_fn=nn.SmoothL1Loss(),
-    batch_size=128,
-    virtual_batch_size=64,
+    batch_size=64,
+    virtual_batch_size=32,
     patience=15,
     drop_last=False
 )
 
 preds = model.predict(X_test)
 
-mse = mean_squared_error(y_test, preds)
-mae = mean_absolute_error(y_test, preds)
+real_preds = np.expm1(preds)
+y_test_real = np.expm1(y_test)
+
+mse = mean_squared_error(y_test_real, real_preds)
+mae = mean_absolute_error(y_test_real, real_preds)
 norm_mae = round(float(mae), 6)*35000000000
 
 print("MSE:", round(float(mse), 6))
 print("MAE:", round(float(mae), 6))
-
-
 
 
 # with open("models/tab_net/results.txt", "a", encoding="utf-8") as file:
