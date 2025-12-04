@@ -45,7 +45,7 @@ print(f"validation size: {X_val.shape[0]}")
 print(f"test size: {X_test.shape[0]}")
 
 
-car_cluster_dims = [y for y in range(4, 64)]
+car_cluster_dims = [y for y in range(32, 65)]
 mse_results = {}
 mae_results = {}
 
@@ -85,7 +85,7 @@ for car_cluster_dim in car_cluster_dims:
     norm_mae = round(float(mae), 6)*35000000000
 
     print("MSE:", round(float(mse), 6))
-    print("MAE:", round(float(mae), 6))
+    print("MAE:", round(float(mae), 6), norm_mae)
 
     mse_results[mse] = car_cluster_dim
     mae_results[norm_mae] = car_cluster_dim
