@@ -25,7 +25,7 @@ cat_cols = ["color_id", "name_cluster"]
 selected_cols = cat_cols + num_cols
 
 X = df[selected_cols].values.astype(np.float32)
-y = df["price"].values.astype(np.float32).reshape(-1, 1)
+y = df["price_scaled"].values.astype(np.float32).reshape(-1, 1)
 
 cat_idxs = [selected_cols.index(col) for col in cat_cols]
 cat_dims = [df[col].nunique() for col in cat_cols]
@@ -46,24 +46,24 @@ print(f"validation size: {X_val.shape[0]}")
 print(f"test size: {X_test.shape[0]}")
 
 
-car_cluster_dims = [y for y in range(32, 65)]
+n_a_ds = [y for y in range(4, 33)]
 mse_results = {}
 mae_results = {}
 
 
-for car_cluster_dim in car_cluster_dims:
-    print(f"\ntrying {car_cluster_dim} clusters")
+for n_a_d in n_a_ds:
+    print(f"\ntrying {n_a_d} n_a and n_d")
 
     tabnet_params = {
-        "n_d": 12,
-        "n_a": 12,
+        "n_d": n_a_d,
+        "n_a": n_a_d,
         "n_steps": 8,
         "gamma": 0.7,
         "cat_idxs": cat_idxs,
         "cat_dims": cat_dims,
-        "cat_emb_dim": [4, car_cluster_dim],
+        "cat_emb_dim": [4, 18],
         "optimizer_fn": __import__("torch").optim.Adam,
-        "optimizer_params": {"lr": 0.003},
+        "optimizer_params": {"lr": 0.005},
     }
 
     model = TabNetRegressor(**tabnet_params)
@@ -81,23 +81,25 @@ for car_cluster_dim in car_cluster_dims:
 
     preds = model.predict(X_test)
 
-    mse = mean_squared_error(y_test, preds)
-    mae = mean_absolute_error(y_test, preds)
-    norm_mae = round(float(mae), 6)*35000000000
+    real_preds = np.expm1(preds)
+    y_test_real = np.expm1(y_test)
+
+    mse = mean_squared_error(y_test_real, real_preds)
+    mae = mean_absolute_error(y_test_real, real_preds)
 
     print("MSE:", round(float(mse), 6))
-    print("MAE:", round(float(mae), 6), norm_mae)
+    print("MAE:", round(float(mae), 6))
 
-    mse_results[mse] = car_cluster_dim
-    mae_results[norm_mae] = car_cluster_dim
+    mse_results[mse] = n_a_d
+    mae_results[mae] = n_a_d
 
 
-with open("models/tab_net/results.txt", "a", encoding="utf-8") as file:
+with open("models/test_results/results.txt", "a", encoding="utf-8") as file:
     file.write(f"k={df['name_cluster'].nunique()}\n")
     file.write(
-        f"best mse at {min(mse_results.keys())} at car embed {mse_results[min(mse_results.keys())]}\n")
+        f"best mse at {min(mse_results.keys())} at n_a_d {mse_results[min(mse_results.keys())]}\n")
     file.write(
-        f"best mae at {min(mae_results.keys())} at car embed {mae_results[min(mae_results.keys())]}\n")
+        f"best mae at {min(mae_results.keys())} at n_a_d {mae_results[min(mae_results.keys())]}\n\n")
 
 
 # for real, pred in zip(y_test[:10], preds[:10]):

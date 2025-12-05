@@ -1,4 +1,0 @@
-k=590
-k=590
-best mse at 0.000308201793814078 at car embed 36
-best mae at 199815000.0 at car embed 39

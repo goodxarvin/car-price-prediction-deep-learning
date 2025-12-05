@@ -5,6 +5,9 @@ from torch import nn
 from pytorch_tabnet.tab_model import TabNetRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+import os
+
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 
 print(torch.cuda.is_available())
@@ -48,6 +51,7 @@ print(f"test size: {X_test.shape[0]}")
 car_cluster_dims = [y for y in range(4, 64)]
 mse_results = {}
 mae_results = {}
+# device = torch.device("cpu")
 
 
 tabnet_params = {
