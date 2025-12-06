@@ -61,9 +61,9 @@ for n_a_d in n_a_ds:
         "gamma": 0.7,
         "cat_idxs": cat_idxs,
         "cat_dims": cat_dims,
-        "cat_emb_dim": [4, 18],
+        "cat_emb_dim": [4, 16],
         "optimizer_fn": __import__("torch").optim.Adam,
-        "optimizer_params": {"lr": 0.005},
+        "optimizer_params": {"lr": 2e-2},
     }
 
     model = TabNetRegressor(**tabnet_params)
