@@ -58,7 +58,7 @@ tabnet_params = {
     "n_d": 12,
     "n_a": 12,
     "n_steps": 8,
-    "gamma": 1,
+    "gamma": 0.7,
     "cat_idxs": cat_idxs,
     "cat_dims": cat_dims,
     "cat_emb_dim": [4, 16],
@@ -84,9 +84,15 @@ preds = model.predict(X_test)
 real_preds = np.expm1(preds)
 y_test_real = np.expm1(y_test)
 
+results_df = pd.DataFrame({
+    "real": y_test_real.flatten(),
+    "preds": real_preds.flatten(),
+})
+
+results_df.to_csv("error_analysis/results.csv", index=False)
+
 mse = mean_squared_error(y_test_real, real_preds)
 mae = mean_absolute_error(y_test_real, real_preds)
-norm_mae = round(float(mae), 6)*35000000000
 
 print("MSE:", round(float(mse), 6))
 print("MAE:", round(float(mae), 6))
