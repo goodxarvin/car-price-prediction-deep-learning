@@ -81,9 +81,10 @@ preds = model.predict(X_test)
 real_preds = np.expm1(preds)
 y_test_real = np.expm1(y_test)
 
-X_test_df = pd.DataFrame(X_test, columns=selected_cols)
+X_test_df = pd.DataFrame(X_test, columns=selected_cols + ["name"] + [])
 
 results_df = pd.DataFrame({
+    "name": X_test_df["name"],
     "mileage": X_test_df["mileage"],
     "model": X_test_df["model"],
     "color_id": X_test_df["color_id"],
@@ -101,7 +102,6 @@ mae = mean_absolute_error(y_test_real, real_preds)
 
 print("MSE:", round(float(mse), 6))
 print("MAE:", round(float(mae), 6))
-
 
 
 # with open("models/tab_net/results.txt", "a", encoding="utf-8") as file:
