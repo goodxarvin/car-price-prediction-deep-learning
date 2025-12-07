@@ -58,7 +58,7 @@ tabnet_params = {
     "n_d": 12,
     "n_a": 12,
     "n_steps": 8,
-    "gamma": 0.7,
+    "gamma": 1,
     "cat_idxs": cat_idxs,
     "cat_dims": cat_dims,
     "cat_emb_dim": [4, 16],
