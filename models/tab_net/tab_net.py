@@ -5,9 +5,6 @@ from torch import nn
 from pytorch_tabnet.tab_model import TabNetRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-import os
-
-os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 
 print(torch.cuda.is_available())
@@ -84,10 +81,18 @@ preds = model.predict(X_test)
 real_preds = np.expm1(preds)
 y_test_real = np.expm1(y_test)
 
+X_test_df = pd.DataFrame(X_test, columns=selected_cols)
+
 results_df = pd.DataFrame({
+    "mileage": X_test_df["mileage"],
+    "model": X_test_df["model"],
+    "color_id": X_test_df["color_id"],
+    "name_cluster": X_test_df["name_cluster"],
     "real": y_test_real.flatten(),
-    "preds": real_preds.flatten(),
+    "pred": real_preds.flatten(),
 })
+
+results_df["error"] = np.abs(results_df["real"] - results_df["pred"])
 
 results_df.to_csv("error_analysis/results.csv", index=False)
 
@@ -96,6 +101,7 @@ mae = mean_absolute_error(y_test_real, real_preds)
 
 print("MSE:", round(float(mse), 6))
 print("MAE:", round(float(mae), 6))
+
 
 
 # with open("models/tab_net/results.txt", "a", encoding="utf-8") as file:
