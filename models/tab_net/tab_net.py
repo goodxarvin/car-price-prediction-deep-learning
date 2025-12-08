@@ -81,10 +81,9 @@ preds = model.predict(X_test)
 real_preds = np.expm1(preds)
 y_test_real = np.expm1(y_test)
 
-X_test_df = pd.DataFrame(X_test, columns=selected_cols + ["name"] + [])
+X_test_df = pd.DataFrame(X_test, columns=selected_cols)
 
 results_df = pd.DataFrame({
-    "name": X_test_df["name"],
     "mileage": X_test_df["mileage"],
     "model": X_test_df["model"],
     "color_id": X_test_df["color_id"],
