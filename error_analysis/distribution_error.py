@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-df_errors = pd.read_csv("error_analysis/results_best_model.csv")
+df_errors = pd.read_csv("error_analysis/results.csv")
 
 y_test_real = df_errors["real"]
 real_preds = df_errors["pred"]
