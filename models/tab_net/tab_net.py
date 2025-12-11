@@ -74,7 +74,7 @@ model.fit(
     loss_fn=nn.SmoothL1Loss(),
     batch_size=64,
     virtual_batch_size=32,
-    patience=15,
+    patience=20,
     drop_last=False
 )
 
