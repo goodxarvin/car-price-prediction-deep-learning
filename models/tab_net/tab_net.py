@@ -62,7 +62,7 @@ tabnet_params = {
     "optimizer_fn": __import__("torch").optim.Adam,
     "optimizer_params": {"lr": 2e-2},
     "mask_type": "sparsemax",
-    "momentum": 0.2,
+    "momentum": 0.1,
 }
 
 model = TabNetRegressor(**tabnet_params)
