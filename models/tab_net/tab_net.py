@@ -52,10 +52,10 @@ mae_results = {}
 
 
 tabnet_params = {
-    "n_d": 11,
+    "n_d": 14,
     "n_a": 11,
     "n_steps": 8,
-    "gamma": 0.7,
+    "gamma": 0.9,
     "cat_idxs": cat_idxs,
     "cat_dims": cat_dims,
     "cat_emb_dim": [4, 15],
