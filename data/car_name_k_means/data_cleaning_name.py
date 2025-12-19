@@ -19,7 +19,7 @@ df["name_cluster"] = kmeans.fit_predict(X)
 
 with open("data/car_name_k_means/cluster.txt", "w", encoding="utf-8") as file:
     for i in range(kmeans.n_clusters):
-        file.write(f"\n--- خوشه {i} ---\n")
+        file.write(f"\n--- cluster {i} ---\n")
         file.write(df[df['name_cluster'] == i]
                    ['name'].head(10).to_string(index=False))
         file.write("\n")
