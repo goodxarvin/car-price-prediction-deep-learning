@@ -15,15 +15,17 @@ p50 = (df_errors["error"] < 50_000_000).mean() * 100
 
 p100 = (df_errors["error"] < 100_000_000).mean() * 100
 
-p120 = (df_errors["error"] < 150_000_000).mean() * 100
+p150 = (df_errors["error"] < 150_000_000).mean() * 100
 
 p200 = (df_errors["error"] < 200_000_000).mean() * 100
 
+p300 = (df_errors["error"] < 300_000_000).mean() * 100
+
 print("less then 50M:", round(p50, 2), "%")
 print("less then 100M:", round(p100, 2), "%")
-print("less then 150M:", round(p120, 2), "%")
+print("less then 150M:", round(p150, 2), "%")
 print("less then 200M:", round(p200, 2), "%")
-
+print("less then 300M:", round(p300, 2), "%")
 print("\nloss mean", int(df_errors["error"].mean()))
 print("loss middle", int(df_errors["error"].median()))
 
