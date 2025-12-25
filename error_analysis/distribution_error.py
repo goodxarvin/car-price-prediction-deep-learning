@@ -21,45 +21,46 @@ p200 = (df_errors["error"] < 200_000_000).mean() * 100
 
 p300 = (df_errors["error"] < 300_000_000).mean() * 100
 
+MAE = int(df_errors["error"].mean())
+price_mean = df_errors["pred"].mean()
+
+
 print("less then 50M:", round(p50, 2), "%")
 print("less then 100M:", round(p100, 2), "%")
 print("less then 150M:", round(p150, 2), "%")
 print("less then 200M:", round(p200, 2), "%")
 print("less then 300M:", round(p300, 2), "%")
-print("\nloss mean", int(df_errors["error"].mean()))
+print("\nloss mean", MAE)
 print("loss middle", int(df_errors["error"].median()))
+print(
+    f"normilized MAE (accuracy percentage): {round((MAE/price_mean)*100, 2)} %\n")
 
 
 threshold = df_errors["error"].quantile(0.95)
 bad_cases = df_errors[df_errors["error"] >= threshold]
 
-
 worst_samples = df_errors.sort_values("error", ascending=False).head(10)
 print(worst_samples)
-
 
 print("worst data:", len(bad_cases))
 print(bad_cases.head(10))
 
+# plt.figure(figsize=(10, 6))
+# plt.hist(df_errors["error"]/1e6, bins=50)
+# plt.xlabel("loss (million toman)")
+# plt.ylabel("sample number")
+# plt.title("scattering")
+# plt.show()
 
-plt.figure(figsize=(10, 6))
-plt.hist(df_errors["error"]/1e6, bins=50)
-plt.xlabel("loss (million toman)")
-plt.ylabel("sample number")
-plt.title("scattering")
-plt.show()
+# plt.figure(figsize=(10, 6))
+# plt.scatter(df_errors["real"]/1e6, df_errors["error"]/1e6, alpha=0.5)
+# plt.xlabel("real pprice (million toman)")
+# plt.ylabel("loss (million toman)")
+# plt.title("relation between loss and real prices")
+# plt.show()
 
-
-plt.figure(figsize=(10, 6))
-plt.scatter(df_errors["real"]/1e6, df_errors["error"]/1e6, alpha=0.5)
-plt.xlabel("real pprice (million toman)")
-plt.ylabel("loss (million toman)")
-plt.title("relation between loss and real prices")
-plt.show()
-
-
-plt.figure(figsize=(12, 6))
-sns.boxplot(x="name_cluster", y="error", data=df_errors)
-plt.ylim(0, 2e9)
-plt.title("loss by (name cluster)")
-plt.show()
+# plt.figure(figsize=(12, 6))
+# sns.boxplot(x="name_cluster", y="error", data=df_errors)
+# plt.ylim(0, 2e9)
+# plt.title("loss by (name cluster)")
+# plt.show()
