@@ -73,9 +73,9 @@ x = Concatenate()([
     name_emb
 ])
 
-x = Dense(64, activation="relu")(x)
-x = Dense(128, activation="relu")(x)
-x = Dense(256, activation="relu")(x)
+x = Dense(256, activation="selu")(x)
+x = Dense(128, activation="selu")(x)
+x = Dense(64, activation="selu")(x)
 # x = Dense(32, activation="relu")(x)
 
 output = Dense(1)(x)
@@ -88,8 +88,8 @@ model = Model(
 
 model.compile(
     optimizer=tf.keras.optimizers.Adam(1e-3),
-    loss="mae",
-    metrics=["mae"]
+    loss="mse",
+    metrics=["mae", "mse"]
 )
 
 model.summary()
@@ -112,7 +112,7 @@ history = model.fit(
         },
         y_val
     ),
-    epochs=60,
+    epochs=85,
     batch_size=256,
     callbacks=[
         tf.keras.callbacks.EarlyStopping(
