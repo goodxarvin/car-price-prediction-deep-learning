@@ -73,10 +73,10 @@ x = Concatenate()([
     name_emb
 ])
 
-x = Dense(256, activation="selu")(x)
-x = Dense(128, activation="selu")(x)
-x = Dense(64, activation="selu")(x)
-# x = Dense(32, activation="relu")(x)
+x = Dense(256, activation="relu")(x)
+x = Dense(128, activation="relu")(x)
+x = Dense(64, activation="relu")(x)
+x = Dense(32, activation="relu")(x)
 
 output = Dense(1)(x)
 
@@ -88,7 +88,7 @@ model = Model(
 
 model.compile(
     optimizer=tf.keras.optimizers.Adam(1e-3),
-    loss="mse",
+    loss="huber",
     metrics=["mae", "mse"]
 )
 
