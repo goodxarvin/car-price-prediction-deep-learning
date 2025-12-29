@@ -12,7 +12,7 @@ df["name"] = df["name"].apply(filter_unuseful_words)
 vectorizer = TfidfVectorizer()
 X = vectorizer.fit_transform(df["name"])
 
-kmeans = KMeans(n_clusters=590, random_state=42)
+kmeans = KMeans(n_clusters=580, random_state=42)
 df["name_cluster"] = kmeans.fit_predict(X)
 
 with open("data/car_name_k_means/cluster.txt", "w", encoding="utf-8") as file:
@@ -27,8 +27,8 @@ clean_rows = []
 
 for cluster_id, group in df.groupby("name_cluster"):
 
-    q1 = group["price"].quantile(0.25)
-    q3 = group["price"].quantile(0.75)
+    q1 = group["price"].quantile(0.3)
+    q3 = group["price"].quantile(0.7)
     iqr = q3 - q1
 
     lower = q1 - 1.5 * iqr
