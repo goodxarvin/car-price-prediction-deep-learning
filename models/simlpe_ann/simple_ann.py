@@ -77,6 +77,8 @@ x = Dense(256, activation="relu")(x)
 x = Dense(128, activation="relu")(x)
 x = Dense(64, activation="relu")(x)
 x = Dense(32, activation="relu")(x)
+x = Dense(16, activation="relu")(x)
+
 
 output = Dense(1)(x)
 
