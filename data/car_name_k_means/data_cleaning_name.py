@@ -7,6 +7,9 @@ from sklearn.cluster import KMeans
 df = pd.read_csv("data/csv_outputs/cleaned_mileage_model_price_data.csv")
 # print(df["name"][1])
 df["name"] = df["name"].apply(filter_unuseful_words)
+print("before accident: ", len(df))
+df = df[~df["name"].str.contains("تصادفی", na=False)]
+print("after accident: ", len(df), "\n")
 # print(df["name"][1])
 
 vectorizer = TfidfVectorizer()
@@ -23,9 +26,7 @@ with open("data/car_name_k_means/cluster.txt", "w", encoding="utf-8") as file:
         file.write("\n")
 
 
-print("before accident: ", len(df))
-df = df[~df["name"].str.contains("تصادفی", na=False)]
-print("after accident: ", len(df), "\n")
+
 
 clean_rows = []
 
