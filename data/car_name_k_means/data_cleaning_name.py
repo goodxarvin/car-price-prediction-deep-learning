@@ -1,6 +1,4 @@
-import numpy as np
 import pandas as pd
-from hazm import word_tokenize
 from data.car_name_k_means.cleaning_name_funcs import filter_unuseful_words
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
@@ -42,6 +40,11 @@ for cluster_id, group in df.groupby("name_cluster"):
     clean_rows.append(good)
 
 df_clean = pd.concat(clean_rows, ignore_index=True)
+print("before accident: ", len(df_clean))
+df_clean = df_clean[~df_clean["name"].str.contains("تصادفی", na=False)]
+print("after accident: ", len(df_clean), "\n")
+
+
 
 print("before cleaning: ", len(df))
 print("after cleaning: ", len(df_clean))

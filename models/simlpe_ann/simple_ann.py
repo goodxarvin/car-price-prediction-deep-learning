@@ -59,7 +59,7 @@ color_emb = Embedding(
 
 name_emb = Embedding(
     input_dim=num_names + 1,
-    output_dim=16
+    output_dim=24
 )(name_in)
 
 
@@ -76,8 +76,8 @@ x = Concatenate()([
 x = Dense(256, activation="relu")(x)
 x = Dense(128, activation="relu")(x)
 x = Dense(64, activation="relu")(x)
-x = Dense(32, activation="relu")(x)
-x = Dense(16, activation="relu")(x)
+# x = Dense(32, activation="relu")(x)
+# x = Dense(16, activation="relu")(x)
 
 
 output = Dense(1)(x)
@@ -90,7 +90,7 @@ model = Model(
 
 model.compile(
     optimizer=tf.keras.optimizers.Adam(1e-3),
-    loss="huber",
+    loss="mae",
     metrics=["mae", "mse"]
 )
 
@@ -126,14 +126,16 @@ history = model.fit(
 
 
 y_pred_log = model.predict({
-    "model": X_val["model"],
-    "mileage": X_val["mileage"],
-    "color_id": X_val["color_id"],
-    "name_cluster": X_val["name_cluster"]
+    "model": X_test["model"],
+    "mileage": X_test["mileage"],
+    "color_id": X_test["color_id"],
+    "name_cluster": X_test["name_cluster"]
 })
 
+
+
 y_pred_price = np.exp(y_pred_log)
-y_true_price = np.exp(y_val)
+y_true_price = np.exp(y_test)
 
 
 mae_real = mean_absolute_error(y_true_price, y_pred_price)
