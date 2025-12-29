@@ -23,6 +23,10 @@ with open("data/car_name_k_means/cluster.txt", "w", encoding="utf-8") as file:
         file.write("\n")
 
 
+print("before accident: ", len(df))
+df = df[~df["name"].str.contains("تصادفی", na=False)]
+print("after accident: ", len(df), "\n")
+
 clean_rows = []
 
 for cluster_id, group in df.groupby("name_cluster"):
@@ -40,10 +44,6 @@ for cluster_id, group in df.groupby("name_cluster"):
     clean_rows.append(good)
 
 df_clean = pd.concat(clean_rows, ignore_index=True)
-print("before accident: ", len(df_clean))
-df_clean = df_clean[~df_clean["name"].str.contains("تصادفی", na=False)]
-print("after accident: ", len(df_clean), "\n")
-
 
 
 print("before cleaning: ", len(df))
