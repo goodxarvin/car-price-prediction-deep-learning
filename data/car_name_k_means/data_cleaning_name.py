@@ -15,7 +15,7 @@ print("after accident: ", len(df), "\n")
 vectorizer = TfidfVectorizer()
 X = vectorizer.fit_transform(df["name"])
 
-kmeans = KMeans(n_clusters=580, random_state=42)
+kmeans = KMeans(n_clusters=590, random_state=42)
 df["name_cluster"] = kmeans.fit_predict(X)
 
 with open("data/car_name_k_means/cluster.txt", "w", encoding="utf-8") as file:
