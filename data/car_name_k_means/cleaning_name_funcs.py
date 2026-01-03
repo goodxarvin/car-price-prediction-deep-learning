@@ -114,18 +114,4 @@ def filter_unuseful_words(name):
     return final_filtered_name
 
 
-# print(filter_unuseful_words('کوییک دنده‌ای r فروشی وقابل'))
-# print(filter_unuseful_words('برلیانس اچ 230 دنده'))
-# print(filter_unuseful_words('سمندlx ef 7 گازسوزکارخانه کارمندی'))
-# print(filter_unuseful_words(' سمند ef 7 سورن پلاس با مانیتور'))
-# print(filter_unuseful_words('پژو پارس عالی هزار تومن'))
-# print(filter_unuseful_words('206 تیپ ۲'))
-# print(filter_unuseful_words('خودرو فیدلیتی 7 نفره فوری'))
-# print(filter_unuseful_words('  پژو پارس سال عروسک'))
-# print(filter_unuseful_words('رانا پلاس تحویل کم'))
-# print(filter_unuseful_words(' پژو ۴۰۵ لاکاغذی'))
-# print(filter_unuseful_words('      رنو تندر e 2 پارس یی'))
-# print(filter_unuseful_words(' 207 صفرکیلومتر تحویل همان ثانیه'))
-# print(filter_unuseful_words('       پژو 206 تیپ 2 دور'))
-# print(filter_unuseful_words('         سمند سورن پلاس تحویلی 12  17'))
-# print(filter_unuseful_words(' سمند ای اف‌ سون 1 397'))
+
