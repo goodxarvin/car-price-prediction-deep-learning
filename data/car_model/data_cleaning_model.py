@@ -1,13 +1,10 @@
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
+# from sklearn.preprocessing import LabelEncoder
 
 
 df = pd.read_csv("data/csv_outputs/cleaned_mileage_data.csv")
 df["model"] = df["model"].apply(lambda x: x-621 if x > 1950 else x)
 df["model"] = df["model"].apply(lambda x: x/1404)
-
-
-
 
 
 df.to_csv("data/csv_outputs/cleaned_mileage_model_data.csv",

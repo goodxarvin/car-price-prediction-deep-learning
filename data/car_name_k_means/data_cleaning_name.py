@@ -23,7 +23,7 @@ with open("data/car_name_k_means/cluster.txt", "w", encoding="utf-8") as file:
                    ['name'].head(10).to_string(index=False))
         file.write("\n")
 
-
+z
 
 
 clean_rows = []
